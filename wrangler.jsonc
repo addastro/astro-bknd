@@ -1,5 +1,5 @@
 {
-  "name": "cf-local-remote",
+  "name": "bknd-astro-editor",
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-09-30",
   "compatibility_flags": ["nodejs_compat"],
@@ -16,14 +16,14 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "cf-local-remote",
-      "database_id": "6e4355cc-8b4f-4950-b765-7186a5486130"
+      "database_name": "bknd-astro-editor-d1",
+      "database_id": "497c4394-e147-4284-8cff-5744260814fd"
     }
   ],
   "r2_buckets": [
     {
       "binding": "BUCKET",
-      "bucket_name": "cf-local-remote"
+      "bucket_name": "bknd-astro-editor"
     }
   ],
   "env": {
@@ -34,15 +34,15 @@
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "cf-local-remote",
-          "database_id": "6e4355cc-8b4f-4950-b765-7186a5486130",
+          "database_name": "bknd-astro-editor-d1",
+          "database_id": "497c4394-e147-4284-8cff-5744260814fd",
           "remote": true
         }
       ],
       "r2_buckets": [
         {
           "binding": "BUCKET",
-          "bucket_name": "cf-local-remote"
+          "bucket_name": "bknd-astro-editor"
         }
       ]
     }

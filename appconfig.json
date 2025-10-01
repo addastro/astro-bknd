@@ -18,7 +18,7 @@
       "allow_credentials": true
     },
     "mcp": {
-      "enabled": false,
+      "enabled": true,
       "path": "/api/system/mcp",
       "logLevel": "emergency"
     }
@@ -194,7 +194,6 @@
           }
         },
         "config": {
-          "name": "Uživatelé",
           "sort_field": "id",
           "sort_dir": "asc"
         }
@@ -459,12 +458,13 @@
     "jwt": {
       "secret": "",
       "alg": "HS256",
+      "expires": 0,
+      "issuer": "bkndastro",
       "fields": [
         "id",
         "email",
         "role"
-      ],
-      "issuer": "bkndastro"
+      ]
     },
     "cookie": {
       "path": "/",
@@ -536,7 +536,9 @@
     "enabled": true,
     "basepath": "/api/media",
     "entity_name": "media",
-    "storage": {},
+    "storage": {
+      "body_max_size": 0
+    },
     "adapter": {
       "type": "r2",
       "config": {

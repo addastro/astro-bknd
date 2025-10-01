@@ -1,7 +1,7 @@
+
 import type { CloudflareBkndConfig } from "bknd/adapter/cloudflare";
 import { devFsWrite } from "bknd/adapter/cloudflare";
 import { syncConfig, syncSecrets, syncTypes } from "bknd/plugins";
-import { d1 } from "bknd/adapter/cloudflare";
 
 // @ts-ignore prettier-ignore
 import appConfig from "./appconfig.json" with { type: "json" };

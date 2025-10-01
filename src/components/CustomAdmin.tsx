@@ -173,7 +173,7 @@ function LexicalEditorWrapper({ value, onChange }: { value?: string, onChange: (
                 <div style={{position: 'relative', padding: '0 10px 10px 10px'}}>
                     <RichTextPlugin
                         contentEditable={<ContentEditable style={{ minHeight: '200px', outline: 'none' }} />}
-                        placeholder={<div style={{ position: 'absolute', top: '8px', left: '8px', color: '#777', pointerEvents: 'none' }}>Zadejte text...</div>}
+                        placeholder={<div style={{ position: 'absolute', top: '8px', left: '8px', color: '#777', pointerEvents: 'none' }}></div>}
                         ErrorBoundary={LexicalErrorBoundary}
                     />
                 </div>
