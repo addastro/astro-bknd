@@ -24,10 +24,9 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { TRANSFORMERS, $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
-// OPRAVA 1: $isListItemNode patří sem
 import { $isListItemNode, ListItemNode, ListNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, REMOVE_LIST_COMMAND, $isListNode } from '@lexical/list';
 import { CodeNode, CodeHighlightNode } from '@lexical/code';
-import { LinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { LinkNode } from '@lexical/link';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import type { HeadingTagType } from '@lexical/rich-text';
 import { $createHeadingNode, $createQuoteNode, $isHeadingNode, HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -52,7 +51,6 @@ function ToolbarPlugin() {
             setIsUnderline(selection.hasFormat('underline'));
 
             const anchorNode = selection.anchor.getNode();
-            // OPRAVA 2: Správná logika pro zjištění rodiče u seznamu
             let element = anchorNode.getTopLevelElementOrThrow();
             if ($isListItemNode(element)) {
               const parent = element.getParent();
@@ -67,15 +65,10 @@ function ToolbarPlugin() {
                 setBlockType(element.getTag());
             } else {
                 const type = element.getType();
-                if(type === 'root') {
-                    setBlockType('paragraph');
-                } else {
-                    setBlockType(type);
-                }
+                setBlockType(type === 'root' ? 'paragraph' : type);
             }
         }
-    }, [editor]);
-
+    }, []);
 
     useEffect(() => {
         return mergeRegister(

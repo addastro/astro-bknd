@@ -1,9 +1,7 @@
 ---
-// src/pages/admin/[...admin].astro
-
 import "bknd/dist/styles.css";
-import { getApi } from "../../bknd";
-import CustomAdmin from '../../components/CustomAdmin.tsx'; // Důležitý je tento import
+import { getApi } from "../../bknd"; 
+import CustomAdmin from '../../components/CustomAdmin.tsx';
 
 const api = await getApi(Astro, { verify: true });
 const user = api.getUser();
