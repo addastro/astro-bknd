@@ -1,0 +1,29 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    // Naše úpravy, které přepíší základ z `extends`
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    
+    // Nastavení pro hezké importy
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // Vaše stávající nastavení, která mohou zůstat
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "exclude": ["test"],
+  "include": [
+    "worker-configuration.d.ts",
+    "bknd-types.d.ts",
+    "bknd.config.ts",
+    "config.ts",
+    "src/**/*.ts",
+    "src/**/*.astro"
+  ]
+}

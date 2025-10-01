@@ -1,0 +1,41 @@
+{
+  "name": "cf-local-remote",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler pages dev dist",
+    "dev:bknd": "vite",
+    "dev:cf": "wrangler dev",
+    "deploy": "npm run build && npm run bknd:config && npm run bknd_prod -- sync --force && wrangler deploy --env production",
+    "bknd": "tsx node_modules/.bin/bknd",
+    "bknd_prod": "CLOUDFLARE_ENV=production tsx node_modules/.bin/bknd",
+    "bknd:types": "npm run bknd -- types",
+    "bknd:config": "npm run bknd -- config --pretty --out appconfig.json",
+    "bknd:secrets": "npm run bknd -- secrets --format env --template --out .env.example",
+    "bknd:assets": "npm run bknd -- copy-assets --out public/admin",
+    "typegen": "wrangler types && npm run bknd:types",
+    "predev": "npm run bknd:config",
+    "postinstall": "npm run bknd -- config --pretty --default --out appconfig.json && npm run typegen && npm run bknd:secrets && npm run bknd:assets"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.6.9",
+    "@astrojs/react": "^4.4.0",
+    "@types/react": "^19.1.14",
+    "@types/react-dom": "^19.1.9",
+    "astro": "^5.14.1",
+    "bknd": "0.18.0-rc.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.12.3",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "wrangler": "4.40.2"
+  }
+}

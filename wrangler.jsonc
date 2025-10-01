@@ -1,0 +1,50 @@
+{
+  "name": "cf-local-remote",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2025-09-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENVIRONMENT": "development"
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cf-local-remote",
+      "database_id": "6e4355cc-8b4f-4950-b765-7186a5486130"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "cf-local-remote"
+    }
+  ],
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "cf-local-remote",
+          "database_id": "6e4355cc-8b4f-4950-b765-7186a5486130",
+          "remote": true
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "cf-local-remote"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "_TextareaWidget-D5KSP-Oh.js": {
+    "file": "assets/TextareaWidget-D5KSP-Oh.js",
+    "name": "TextareaWidget",
+    "imports": [
+      "src/ui/main.tsx"
+    ]
+  },
+  "src/ui/components/code/CodeEditor.tsx": {
+    "file": "assets/CodeEditor-C7TUWEP8.js",
+    "name": "CodeEditor",
+    "src": "src/ui/components/code/CodeEditor.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/ui/main.tsx"
+    ]
+  },
+  "src/ui/components/form/json-schema/JsonSchemaForm.tsx": {
+    "file": "assets/JsonSchemaForm-1TjK5-AA.js",
+    "name": "JsonSchemaForm",
+    "src": "src/ui/components/form/json-schema/JsonSchemaForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/ui/main.tsx",
+      "_TextareaWidget-D5KSP-Oh.js"
+    ]
+  },
+  "src/ui/main.tsx": {
+    "file": "assets/main-CLRS3Qvd.js",
+    "name": "main",
+    "src": "src/ui/main.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/ui/components/form/json-schema/JsonSchemaForm.tsx",
+      "src/ui/components/code/CodeEditor.tsx",
+      "src/ui/modules/data/components/canvas/DataSchemaCanvas.tsx",
+      "src/ui/components/code/CodeEditor.tsx",
+      "src/ui/routes/test/index.tsx"
+    ],
+    "css": [
+      "assets/main-BylvHekO.css"
+    ]
+  },
+  "src/ui/modules/data/components/canvas/DataSchemaCanvas.tsx": {
+    "file": "assets/DataSchemaCanvas-B3KKdRij.js",
+    "name": "DataSchemaCanvas",
+    "src": "src/ui/modules/data/components/canvas/DataSchemaCanvas.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/ui/main.tsx"
+    ]
+  },
+  "src/ui/routes/test/index.tsx": {
+    "file": "assets/index-BYiFeA9G.js",
+    "name": "index",
+    "src": "src/ui/routes/test/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/ui/main.tsx",
+      "_TextareaWidget-D5KSP-Oh.js"
+    ]
+  }
+}

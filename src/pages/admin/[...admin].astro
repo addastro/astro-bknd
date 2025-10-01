@@ -1,0 +1,18 @@
+---
+// src/pages/admin/[...admin].astro
+
+import "bknd/dist/styles.css";
+import { getApi } from "../../bknd";
+import CustomAdmin from '../../components/CustomAdmin.tsx'; // Důležitý je tento import
+
+const api = await getApi(Astro, { verify: true });
+const user = api.getUser();
+
+export const prerender = false;
+---
+
+<html>
+  <body>
+    <CustomAdmin user={user} client:only="react" />
+  </body>
+</html>
