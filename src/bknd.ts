@@ -16,8 +16,7 @@ export async function getApi(
       BUCKET: env.BUCKET,
       ASSETS: env.ASSETS,
       ENVIRONMENT: env.ENVIRONMENT,
-      // --- PŘIDEJTE TENTO ŘÁDEK ---
-      SECRET: env.SECRET,
+      "auth.jwt.secret": env["auth.jwt.secret"],
       // ----------------------------
    };
 
