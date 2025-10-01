@@ -5,7 +5,6 @@ import {
   $getSelection,
   $isRangeSelection,
   FORMAT_TEXT_COMMAND,
-  FORMAT_ELEMENT_COMMAND,
   $createParagraphNode,
   SELECTION_CHANGE_COMMAND,
   CAN_REDO_COMMAND,
@@ -25,7 +24,7 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { TRANSFORMERS, $convertFromMarkdownString, $convertToMarkdownString } from '@lexical/markdown';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
-// OPRAVA 1: Import $isListItemNode ze správného balíčku '@lexical/list'
+// OPRAVA 1: $isListItemNode patří sem
 import { $isListItemNode, ListItemNode, ListNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, REMOVE_LIST_COMMAND, $isListNode } from '@lexical/list';
 import { CodeNode, CodeHighlightNode } from '@lexical/code';
 import { LinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
@@ -36,9 +35,6 @@ import { mergeRegister } from '@lexical/utils';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { TreeView } from '@lexical/react/LexicalTreeView';
 
-// ============================================================================
-// Toolbar Plugin
-// ============================================================================
 function ToolbarPlugin() {
     const [editor] = useLexicalComposerContext();
     const [canUndo, setCanUndo] = useState(false);
@@ -46,8 +42,6 @@ function ToolbarPlugin() {
     const [isBold, setIsBold] = useState(false);
     const [isItalic, setIsItalic] = useState(false);
     const [isUnderline, setIsUnderline] = useState(false);
-    const [isStrikethrough, setIsStrikethrough] = useState(false);
-    const [isCode, setIsCode] = useState(false);
     const [blockType, setBlockType] = useState<string>('paragraph');
 
     const updateToolbar = useCallback(() => {
@@ -56,14 +50,15 @@ function ToolbarPlugin() {
             setIsBold(selection.hasFormat('bold'));
             setIsItalic(selection.hasFormat('italic'));
             setIsUnderline(selection.hasFormat('underline'));
-            setIsStrikethrough(selection.hasFormat('strikethrough'));
-            setIsCode(selection.hasFormat('code'));
 
             const anchorNode = selection.anchor.getNode();
-            // OPRAVA 2: Vylepšená logika pro zjištění typu bloku, aby se zabránilo chybě s .getTag()
+            // OPRAVA 2: Správná logika pro zjištění rodiče u seznamu
             let element = anchorNode.getTopLevelElementOrThrow();
             if ($isListItemNode(element)) {
-                element = element.getParent() || element;
+              const parent = element.getParent();
+              if ($isListNode(parent)) {
+                element = parent;
+              }
             }
 
             if ($isHeadingNode(element)) {
@@ -71,10 +66,16 @@ function ToolbarPlugin() {
             } else if ($isListNode(element)) {
                 setBlockType(element.getTag());
             } else {
-                setBlockType(element.getType());
+                const type = element.getType();
+                if(type === 'root') {
+                    setBlockType('paragraph');
+                } else {
+                    setBlockType(type);
+                }
             }
         }
-    }, []);
+    }, [editor]);
+
 
     useEffect(() => {
         return mergeRegister(
@@ -113,13 +114,6 @@ function ToolbarPlugin() {
             editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
         }
     };
-    
-    const insertLink = useCallback(() => {
-        const url = prompt("Vložte URL odkazu:");
-        if (url) {
-            editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
-        }
-    }, [editor]);
 
     const toolbarStyles: React.CSSProperties = { display: 'flex', gap: '4px', padding: '8px', borderBottom: '1px solid #444', marginBottom: '8px', background: '#2a2d33', flexWrap: 'wrap' };
     const buttonStyles = (active: boolean = false): React.CSSProperties => ({ background: active ? '#555' : '#333', border: '1px solid #555', color: 'white', padding: '6px 10px', cursor: 'pointer', borderRadius: '4px' });
@@ -132,8 +126,6 @@ function ToolbarPlugin() {
             <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')} style={buttonStyles(isBold)}><b>B</b></button>
             <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')} style={buttonStyles(isItalic)}><i>I</i></button>
             <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')} style={buttonStyles(isUnderline)}><u>U</u></button>
-            <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')} style={buttonStyles(isCode)}>{"<>"}</button>
-            <button onClick={insertLink} style={buttonStyles()}>Link</button>
             <div style={{width: '1px', background: '#555', margin: '0 4px'}}></div>
             <button onClick={() => formatBlock('h1')} style={buttonStyles(blockType === 'h1')}>H1</button>
             <button onClick={() => formatBlock('h2')} style={buttonStyles(blockType === 'h2')}>H2</button>
@@ -158,21 +150,17 @@ function InitialContentPlugin({ initialContent }: { initialContent?: string }) {
 
 function LexicalTreeView() {
     const [editor] = useLexicalComposerContext();
-    const treeViewContainerStyles: React.CSSProperties = { background: '#1e1e1e', color: '#f8f8f2', border: '1px solid #555', padding: '10px', borderRadius: '5px', marginTop: '10px', fontFamily: 'monospace', whiteSpace: 'pre', maxHeight: '300px', overflow: 'auto', fontSize: '12px' };
-
     return (
         <div style={{marginTop: '20px'}}>
             <h3 style={{color: 'white'}}>Live Editor State:</h3>
-            <div style={treeViewContainerStyles}>
-                <TreeView
-                    viewClassName="tree-view-output"
-                    editor={editor}
-                    timeTravelPanelClassName="debug-timetravel-panel"
-                    timeTravelButtonClassName="debug-timetravel-button"
-                    timeTravelPanelSliderClassName="debug-timetravel-panel-slider"
-                    timeTravelPanelButtonClassName="debug-timetravel-panel-button"
-                />
-            </div>
+            <TreeView
+                viewClassName="tree-view-output"
+                editor={editor}
+                timeTravelPanelClassName="debug-timetravel-panel"
+                timeTravelButtonClassName="debug-timetravel-button"
+                timeTravelPanelSliderClassName="debug-timetravel-panel-slider"
+                timeTravelPanelButtonClassName="debug-timetravel-panel-button"
+            />
         </div>
     );
 }
@@ -187,7 +175,7 @@ function LexicalEditorWrapper({ value, onChange }: { value?: string, onChange: (
 
     return (
         <LexicalComposer initialConfig={editorConfig}>
-            <div data-color-mode="dark" style={{ background: '#23262d', color: 'white', borderRadius: '5px', border: '1px solid #555' }}>
+            <div style={{ background: '#23262d', color: 'white', borderRadius: '5px', border: '1px solid #555' }}>
                 <ToolbarPlugin />
                 <div style={{position: 'relative', padding: '0 10px 10px 10px'}}>
                     <RichTextPlugin

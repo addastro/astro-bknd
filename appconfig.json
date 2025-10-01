@@ -169,8 +169,11 @@
             "type": "enum",
             "config": {
               "options": {
-                "type": "objects",
-                "values": []
+                "type": "strings",
+                "values": [
+                  "admin",
+                  "editor"
+                ]
               },
               "required": false
             }
@@ -486,7 +489,48 @@
     "guard": {
       "enabled": false
     },
-    "roles": {}
+    "roles": {
+      "admin": {
+        "permissions": [
+          "data.database.sync",
+          "data.entity.read",
+          "data.raw.query",
+          "auth.user.password.change",
+          "auth.user.password.test",
+          "media.file.delete",
+          "media.file.upload",
+          "system.access.admin",
+          "system.config.read",
+          "system.mcp",
+          "system.schema.read",
+          "system.config.read.secrets",
+          "system.access.api",
+          "media.file.list",
+          "auth.user.token.create",
+          "data.entity.update",
+          "data.entity.create",
+          "data.entity.delete",
+          "data.raw.mutate",
+          "auth.user.create",
+          "media.file.read",
+          "system.build",
+          "system.config.write"
+        ],
+        "implicit_allow": true
+      },
+      "editor": {
+        "permissions": [
+          "system.access.api",
+          "media.file.read",
+          "media.file.upload",
+          "media.file.delete",
+          "data.entity.read",
+          "data.entity.create",
+          "data.entity.update",
+          "data.entity.delete"
+        ]
+      }
+    }
   },
   "media": {
     "enabled": true,
