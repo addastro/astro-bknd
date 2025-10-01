@@ -18,7 +18,7 @@
       "allow_credentials": true
     },
     "mcp": {
-      "enabled": true,
+      "enabled": false,
       "path": "/api/system/mcp",
       "logLevel": "emergency"
     }
@@ -27,144 +27,6 @@
     "basepath": "/api/data",
     "default_primary_format": "integer",
     "entities": {
-      "todos": {
-        "type": "regular",
-        "fields": {
-          "id": {
-            "type": "primary",
-            "config": {
-              "format": "integer",
-              "fillable": false,
-              "required": false
-            }
-          },
-          "title": {
-            "type": "text",
-            "config": {
-              "required": false
-            }
-          },
-          "done": {
-            "type": "boolean",
-            "config": {
-              "required": false
-            }
-          }
-        },
-        "config": {
-          "name": "Todos",
-          "name_singular": "Todos",
-          "sort_field": "id",
-          "sort_dir": "asc"
-        }
-      },
-      "users": {
-        "type": "system",
-        "fields": {
-          "id": {
-            "type": "primary",
-            "config": {
-              "format": "integer",
-              "fillable": false,
-              "required": false
-            }
-          },
-          "email": {
-            "type": "text",
-            "config": {
-              "required": true
-            }
-          },
-          "strategy": {
-            "type": "enum",
-            "config": {
-              "options": {
-                "type": "strings",
-                "values": [
-                  "password"
-                ]
-              },
-              "required": true,
-              "hidden": [
-                "update",
-                "form"
-              ],
-              "fillable": [
-                "create"
-              ]
-            }
-          },
-          "strategy_value": {
-            "type": "text",
-            "config": {
-              "fillable": [
-                "create"
-              ],
-              "hidden": [
-                "read",
-                "table",
-                "update",
-                "form"
-              ],
-              "required": true
-            }
-          },
-          "role": {
-            "type": "enum",
-            "config": {
-              "options": {
-                "type": "strings",
-                "values": [
-                  "admin",
-                  "editor"
-                ]
-              },
-              "required": false
-            }
-          }
-        },
-        "config": {
-          "sort_field": "id",
-          "sort_dir": "asc"
-        }
-      },
-      "pages": {
-        "type": "regular",
-        "fields": {
-          "id": {
-            "type": "primary",
-            "config": {
-              "format": "integer",
-              "fillable": false,
-              "required": false
-            }
-          },
-          "title": {
-            "type": "text",
-            "config": {
-              "required": false
-            }
-          },
-          "handle": {
-            "type": "text",
-            "config": {
-              "required": false
-            }
-          },
-          "active": {
-            "type": "boolean",
-            "config": {
-              "required": false
-            }
-          }
-        },
-        "config": {
-          "name": "Pages",
-          "name_singular": "Pages",
-          "sort_field": "id",
-          "sort_dir": "asc"
-        }
-      },
       "media": {
         "type": "system",
         "fields": {
@@ -251,31 +113,297 @@
           "sort_field": "id",
           "sort_dir": "asc"
         }
+      },
+      "users": {
+        "type": "system",
+        "fields": {
+          "id": {
+            "type": "primary",
+            "config": {
+              "format": "integer",
+              "fillable": false,
+              "required": false
+            }
+          },
+          "email": {
+            "type": "text",
+            "config": {
+              "required": true
+            }
+          },
+          "strategy": {
+            "type": "enum",
+            "config": {
+              "options": {
+                "type": "strings",
+                "values": [
+                  "password"
+                ]
+              },
+              "required": true,
+              "hidden": [
+                "update",
+                "form"
+              ],
+              "fillable": [
+                "create"
+              ]
+            }
+          },
+          "strategy_value": {
+            "type": "text",
+            "config": {
+              "fillable": [
+                "create"
+              ],
+              "hidden": [
+                "read",
+                "table",
+                "update",
+                "form"
+              ],
+              "required": true
+            }
+          },
+          "role": {
+            "type": "enum",
+            "config": {
+              "options": {
+                "type": "objects",
+                "values": []
+              },
+              "required": false
+            }
+          },
+          "avatar": {
+            "type": "media",
+            "config": {
+              "required": false,
+              "fillable": [
+                "update"
+              ],
+              "hidden": false,
+              "mime_types": [],
+              "virtual": true,
+              "entity": "users",
+              "max_items": 1
+            }
+          }
+        },
+        "config": {
+          "name": "Uživatelé",
+          "sort_field": "id",
+          "sort_dir": "asc"
+        }
+      },
+      "pages": {
+        "type": "regular",
+        "fields": {
+          "id": {
+            "type": "primary",
+            "config": {
+              "format": "integer",
+              "fillable": false,
+              "required": false
+            }
+          },
+          "title": {
+            "type": "text",
+            "config": {
+              "required": false
+            }
+          },
+          "content": {
+            "type": "text",
+            "config": {
+              "html_config": {
+                "element": "textarea",
+                "props": {
+                  "rows": "4"
+                }
+              },
+              "required": false,
+              "hidden": [
+                "table"
+              ]
+            }
+          },
+          "tags": {
+            "type": "jsonschema",
+            "config": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              },
+              "required": false
+            }
+          },
+          "users_id": {
+            "type": "relation",
+            "config": {
+              "label": "Users",
+              "required": false,
+              "reference": "users",
+              "target": "users",
+              "target_field": "id",
+              "target_field_type": "integer",
+              "on_delete": "set null"
+            }
+          }
+        },
+        "config": {
+          "name": "Stránky",
+          "name_singular": "Stránky",
+          "sort_field": "id",
+          "sort_dir": "asc"
+        }
+      },
+      "posts": {
+        "type": "regular",
+        "fields": {
+          "id": {
+            "type": "primary",
+            "config": {
+              "format": "integer",
+              "fillable": false,
+              "required": false
+            }
+          },
+          "title": {
+            "type": "text",
+            "config": {
+              "required": false
+            }
+          },
+          "content": {
+            "type": "text",
+            "config": {
+              "html_config": {
+                "element": "textarea",
+                "props": {
+                  "rows": "4"
+                }
+              },
+              "required": false,
+              "hidden": [
+                "table"
+              ]
+            }
+          },
+          "active": {
+            "type": "boolean",
+            "config": {
+              "required": false
+            }
+          },
+          "tags": {
+            "type": "jsonschema",
+            "config": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              },
+              "required": false
+            }
+          },
+          "images": {
+            "type": "media",
+            "config": {
+              "required": false,
+              "fillable": [
+                "update"
+              ],
+              "hidden": false,
+              "mime_types": [],
+              "virtual": true,
+              "entity": "posts"
+            }
+          },
+          "users_id": {
+            "type": "relation",
+            "config": {
+              "label": "Users",
+              "required": false,
+              "reference": "users",
+              "target": "users",
+              "target_field": "id",
+              "target_field_type": "integer",
+              "on_delete": "set null"
+            }
+          }
+        },
+        "config": {
+          "name": "Články",
+          "name_singular": "Články",
+          "sort_field": "id",
+          "sort_dir": "asc"
+        }
       }
     },
-    "relations": {},
+    "relations": {
+      "poly_pages_media_images": {
+        "type": "poly",
+        "source": "pages",
+        "target": "media",
+        "config": {
+          "mappedBy": "images"
+        }
+      },
+      "n1_pages_users": {
+        "type": "n:1",
+        "source": "pages",
+        "target": "users",
+        "config": {
+          "mappedBy": "",
+          "inversedBy": "",
+          "required": false,
+          "with_limit": 5
+        }
+      },
+      "poly_posts_media_images": {
+        "type": "poly",
+        "source": "posts",
+        "target": "media",
+        "config": {
+          "mappedBy": "images"
+        }
+      },
+      "poly_posts_media_image": {
+        "type": "poly",
+        "source": "posts",
+        "target": "media",
+        "config": {
+          "mappedBy": "image"
+        }
+      },
+      "n1_posts_users": {
+        "type": "n:1",
+        "source": "posts",
+        "target": "users",
+        "config": {
+          "mappedBy": "",
+          "inversedBy": "",
+          "required": false,
+          "with_limit": 5
+        }
+      },
+      "poly_users_media_avatar": {
+        "type": "poly",
+        "source": "users",
+        "target": "media",
+        "config": {
+          "mappedBy": "avatar",
+          "targetCardinality": 1
+        }
+      }
+    },
     "indices": {
-      "idx_unique_users_email": {
-        "entity": "users",
-        "fields": [
-          "email"
-        ],
-        "unique": true
-      },
-      "idx_users_strategy": {
-        "entity": "users",
-        "fields": [
-          "strategy"
-        ],
-        "unique": false
-      },
-      "idx_users_strategy_value": {
-        "entity": "users",
-        "fields": [
-          "strategy_value"
-        ],
-        "unique": false
-      },
       "idx_unique_media_path": {
         "entity": "media",
         "fields": [
@@ -294,6 +422,27 @@
         "entity": "media",
         "fields": [
           "entity_id"
+        ],
+        "unique": false
+      },
+      "idx_unique_users_email": {
+        "entity": "users",
+        "fields": [
+          "email"
+        ],
+        "unique": true
+      },
+      "idx_users_strategy": {
+        "entity": "users",
+        "fields": [
+          "strategy"
+        ],
+        "unique": false
+      },
+      "idx_users_strategy_value": {
+        "entity": "users",
+        "fields": [
+          "strategy_value"
         ],
         "unique": false
       }
@@ -337,49 +486,7 @@
     "guard": {
       "enabled": false
     },
-    "roles": {
-      "admin": {
-        "permissions": [
-          "data.database.sync",
-          "data.entity.read",
-          "data.raw.query",
-          "auth.user.password.change",
-          "auth.user.password.test",
-          "system.access.admin",
-          "system.config.read",
-          "system.mcp",
-          "system.access.api",
-          "system.config.read.secrets",
-          "system.schema.read",
-          "system.build",
-          "system.config.write",
-          "auth.user.create",
-          "auth.user.token.create",
-          "data.entity.update",
-          "data.entity.create",
-          "data.entity.delete",
-          "data.raw.mutate",
-          "media.file.delete",
-          "media.file.upload",
-          "media.file.list",
-          "media.file.read"
-        ],
-        "implicit_allow": true
-      },
-      "editor": {
-        "permissions": [
-          "data.entity.read",
-          "data.entity.update",
-          "data.entity.create",
-          "system.access.api",
-          "media.file.upload",
-          "media.file.read",
-          "media.file.delete",
-          "media.file.list",
-          "data.entity.delete"
-        ]
-      }
-    }
+    "roles": {}
   },
   "media": {
     "enabled": true,
@@ -387,11 +494,9 @@
     "entity_name": "media",
     "storage": {},
     "adapter": {
-      "type": "s3",
+      "type": "r2",
       "config": {
-        "access_key": "",
-        "secret_access_key": "",
-        "url": "https://a6f73612807840e33437c92d3771f8be.r2.cloudflarestorage.com/bknd-code-astro"
+        "binding": "BUCKET"
       }
     }
   },
