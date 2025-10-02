@@ -172,7 +172,8 @@
                 "type": "strings",
                 "values": [
                   "admin",
-                  "editor"
+                  "editor",
+                  "public"
                 ]
               },
               "required": false
@@ -566,6 +567,14 @@
           "data.entity.update",
           "data.entity.delete"
         ]
+      },
+      "public": {
+        "permissions": [
+          "data.entity.read",
+          "media.file.read",
+          "system.access.api"
+        ],
+        "is_default": true
       }
     }
   },
