@@ -3,7 +3,6 @@ import { getApi } from "../bknd";
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
 
-// Krok 1: Změníme "todos" na "pages"
 const api = await getApi(Astro);
 const { data } = await api.data.readMany("pages");
 ---
@@ -12,10 +11,7 @@ const { data } = await api.data.readMany("pages");
   <p slot="context">Static Rendering</p>
   <ul role="list" class="link-card-grid">
     {
-      // Krok 2: Projdeme data a proměnnou přejmenujeme na "page" pro přehlednost
       data.map((page: any) => (
-        // Krok 3: Upravíme vlastnosti pro Card komponentu
-        // Použijeme data z přeložitelných polí (zde českou verzi .cz)
         <Card title={page.title} body={page.content} />
       ))
     }

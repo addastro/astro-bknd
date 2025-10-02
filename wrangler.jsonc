@@ -17,13 +17,13 @@
     {
       "binding": "DB",
       "database_name": "bknd-astro-editor-d1",
-      "database_id": "497c4394-e147-4284-8cff-5744260814fd"
+      "database_id": "ed95862d-ca54-45c6-9e70-97acc4e6c06d"
     }
   ],
   "r2_buckets": [
     {
       "binding": "BUCKET",
-      "bucket_name": "bknd-astro-editor"
+      "bucket_name": "bknd-astro-editor-d1"
     }
   ],
   "env": {
@@ -35,14 +35,14 @@
         {
           "binding": "DB",
           "database_name": "bknd-astro-editor-d1",
-          "database_id": "497c4394-e147-4284-8cff-5744260814fd",
+          "database_id": "ed95862d-ca54-45c6-9e70-97acc4e6c06d",
           "remote": true
         }
       ],
       "r2_buckets": [
         {
           "binding": "BUCKET",
-          "bucket_name": "bknd-astro-editor"
+          "bucket_name": "bknd-astro-editor-d1"
         }
       ]
     }

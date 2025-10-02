@@ -42,9 +42,17 @@ export interface Posts {
   users?: DB["users"];
 }
 
+export interface Todo {
+  id: Generated<number>;
+  title?: string;
+  description?: string;
+  done?: boolean;
+}
+
 interface Database {
   pages: Pages;
   posts: Posts;
+  todo: Todo;
 }
 
 declare module "bknd" {

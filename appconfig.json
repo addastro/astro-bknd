@@ -346,6 +346,43 @@
           "sort_field": "id",
           "sort_dir": "asc"
         }
+      },
+      "todo": {
+        "type": "regular",
+        "fields": {
+          "id": {
+            "type": "primary",
+            "config": {
+              "fillable": false,
+              "required": false,
+              "format": "integer"
+            }
+          },
+          "title": {
+            "type": "text",
+            "config": {
+              "required": false
+            }
+          },
+          "description": {
+            "type": "text",
+            "config": {
+              "required": false
+            }
+          },
+          "done": {
+            "type": "boolean",
+            "config": {
+              "required": false
+            }
+          }
+        },
+        "config": {
+          "name": "Todos",
+          "name_singular": "Todo",
+          "sort_field": "id",
+          "sort_dir": "asc"
+        }
       }
     },
     "relations": {
@@ -487,7 +524,7 @@
       }
     },
     "guard": {
-      "enabled": false
+      "enabled": true
     },
     "roles": {
       "admin": {

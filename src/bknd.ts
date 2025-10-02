@@ -17,7 +17,6 @@ export async function getApi(
       ASSETS: env.ASSETS,
       ENVIRONMENT: env.ENVIRONMENT,
       "auth.jwt.secret": env["auth.jwt.secret"],
-      // ----------------------------
    };
 
    const app = await createApp(config, { env: cleanEnv });
